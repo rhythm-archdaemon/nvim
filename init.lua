@@ -10,7 +10,6 @@ vim.cmd("set shiftwidth=2")
 
 vim.g.mapleader = " "
 
-
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
   local lazyrepo = "https://github.com/folke/lazy.nvim.git"
@@ -27,14 +26,12 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
-
 require("lazy").setup("plugins")
 
-
-local builtin = require("telescope.builtin")
-vim.keymap.set('n', '<C-f>', builtin.find_files, {})
-vim.keymap.set('n', '<leader>fg', builtin.live_grep, {})
-vim.keymap.set('n', '<C-p>', ':Neotree filesystem reveal left<CR>', {})
-
-require("catppuccin").setup()
-vim.cmd.colorscheme "catppuccin"
+vim.api.nvim_create_autocmd("DirChanged", {
+  callback = function()
+    -- Syncs Neovim's global pwd with the local shell process
+    local cwd = vim.fn.getcwd()
+    pcall(vim.fn.chdir, cwd)
+  end,
+})
