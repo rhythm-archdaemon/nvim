@@ -28,10 +28,12 @@ vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup("plugins")
 
+
+ -- Syncs Neovim's global pwd with the local shell process : for opening tmux window in same pwd as neovim
+
 vim.api.nvim_create_autocmd("DirChanged", {
   callback = function()
-    -- Syncs Neovim's global pwd with the local shell process
-    local cwd = vim.fn.getcwd()
+       local cwd = vim.fn.getcwd()
     pcall(vim.fn.chdir, cwd)
   end,
 })
