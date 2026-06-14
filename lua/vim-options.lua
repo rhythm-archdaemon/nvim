@@ -19,3 +19,5 @@ vim.keymap.set("v", "<", "<gv")
 vim.opt.number = true
 vim.opt.relativenumber = false
 vim.opt.signcolumn = "yes"
+
+
